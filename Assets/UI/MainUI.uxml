@@ -1,0 +1,27 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="LifeContainer" style="flex-grow: 0; top: 0; left: 0; flex-direction: row; flex-shrink: 1; width: 30%; height: 4%;">
+        <ui:VisualElement name="Life" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Sprites/User%20Interface.png?fileID=4545135470104253956&amp;guid=6875e9ca69087ec4782ba183e2643e08&amp;type=3#Life&quot;); width: 120px; height: 120px; margin-right: 5px;"/>
+        <ui:VisualElement name="Life" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Sprites/User%20Interface.png?fileID=4545135470104253956&amp;guid=6875e9ca69087ec4782ba183e2643e08&amp;type=3#Life&quot;); width: 120px; height: 120px; margin-right: 5px;"/>
+        <ui:VisualElement name="Life" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Sprites/User%20Interface.png?fileID=4545135470104253956&amp;guid=6875e9ca69087ec4782ba183e2643e08&amp;type=3#Life&quot;); width: 120px; height: 120px; margin-right: 5px;"/>
+    </ui:VisualElement>
+    <ui:Label text="999,999,999" parse-escape-sequences="false" emoji-fallback-support="true" name="Score" style="position: absolute; top: 0; left: 50%; translate: -50% 0; -unity-font-style: bold; font-size: 50px; color: rgb(255, 255, 255);"/>
+    <ui:VisualElement name="BoomContainer" style="flex-grow: 0; top: 0; left: auto; flex-direction: row; flex-shrink: 1; width: 30%; height: 4%; right: 0; position: absolute; align-items: stretch; justify-content: flex-end;">
+        <ui:VisualElement name="Boom" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Sprites/Items.png?fileID=-4261047623482395726&amp;guid=606e3127513c6c74d852755e18a67337&amp;type=3#Boom 4&quot;); width: 120px; height: 120px; margin-right: 0; margin-left: 5px; display: none;"/>
+        <ui:VisualElement name="Boom" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Sprites/Items.png?fileID=-4261047623482395726&amp;guid=606e3127513c6c74d852755e18a67337&amp;type=3#Boom 4&quot;); width: 120px; height: 120px; margin-right: 0; margin-left: 5px; display: none;"/>
+        <ui:VisualElement name="Boom" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Sprites/Items.png?fileID=-4261047623482395726&amp;guid=606e3127513c6c74d852755e18a67337&amp;type=3#Boom 4&quot;); width: 120px; height: 120px; margin-right: 0; margin-left: 5px; display: none;"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="GameOver" style="flex-grow: 1; position: absolute; display: none; background-color: rgba(24, 24, 24, 0.9); top: 0; left: 0; bottom: 0; right: 0;">
+        <ui:VisualElement name="GameOverWrapper" style="flex-grow: 1; align-items: center;">
+            <ui:Label text="GAME OVER!" name="GameOverText" style="margin-top: 35%; color: rgb(255, 255, 255); font-size: 110px; -unity-font-style: bold;"/>
+            <ui:VisualElement name="GameOverCurrentScoreContainer" style="flex-grow: 0; flex-direction: row; margin-top: 8%; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                <ui:Label text="점수 :" name="GameOverCurrentScoreText" enable-rich-text="true" style="margin-top: 4px; color: rgb(255, 255, 255); font-size: 80px; -unity-font-style: bold; margin-right: 30px;"/>
+                <ui:Label text="0" name="GameOverCurrentScoreValue" enable-rich-text="true" style="margin-top: 20px; color: rgb(255, 255, 255); font-size: 80px; -unity-font-style: bold;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="GameOverBestScoreContainer" style="flex-grow: 0; flex-direction: row; margin-top: 8%; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                <ui:Label text="최고 점수 :" name="GameOverBestScoreText" style="margin-top: 4px; color: rgb(255, 255, 255); font-size: 65px; -unity-font-style: bold; margin-right: 30px;"/>
+                <ui:Label text="0" name="GameOverBestScoreValue" enable-rich-text="true" style="margin-top: 20px; color: rgb(255, 255, 255); font-size: 65px; -unity-font-style: bold;"/>
+            </ui:VisualElement>
+            <ui:Button text="Retry?" name="RestartButton" enable-rich-text="true" style="font-size: 80px; -unity-font-style: bold; -unity-font-definition: url(&quot;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&quot;); margin-top: 30%; padding-top: 5%; padding-right: 15%; padding-bottom: 5%; padding-left: 15%; background-color: rgba(183, 212, 238, 0); color: rgb(73, 130, 212); background-image: url(&quot;project://database/Assets/Sprites/User%20Interface.png?fileID=7293623749340134194&amp;guid=6875e9ca69087ec4782ba183e2643e08&amp;type=3#Button&quot;);"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

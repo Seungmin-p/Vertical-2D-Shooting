@@ -3,3 +3,8 @@
 /Logs
 /UserSettings
 *.sln
+/.idea
+/Temp
+/UIElementsSchema
+*.user
+/obj
