@@ -9,8 +9,12 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
+    public int stage;
+    
     public string[] enemyObjs;
     public Transform[] spawnPoints;
+    public Animator fadeAnim;
+    public Transform playerPos;
     
     public float nextSpawnDelay;
     public float curSpawnDelay;
@@ -23,6 +27,8 @@ public class GameManager : MonoBehaviour
     private List<VisualElement> m_Booms;
     private VisualElement m_GameOver;
     private Button m_restartButton;
+    
+    private Label m_StageText;
 
     public List<Spawn> spawnList;
     public int spawnIndex;
@@ -40,6 +46,7 @@ public class GameManager : MonoBehaviour
         m_Booms = boomContainer.Query<VisualElement>("Boom").ToList();
         m_GameOver = root.Q<VisualElement>("GameOver");
         m_restartButton = root.Q<Button>("RestartButton");
+        m_StageText = root.Q<Label>("StageText");
         
         if (m_restartButton != null)
         {
@@ -47,23 +54,83 @@ public class GameManager : MonoBehaviour
         }
         
         spawnList = new List<Spawn>();
-        enemyObjs = new string[] { "enemyS", "enemyM", "enemyL" };
-        ReadSpawnFile();
+        enemyObjs = new string[] { "enemyS", "enemyM", "enemyL", "enemyB" };
+        StageStart();
     }
 
+    public void StageStart()
+    {
+        Invoke("PrintStartText", 0.1f);
+        ReadSpawnFile();
+        
+        fadeAnim.SetTrigger("In");
+    }
+
+    void PrintStartText()
+    {
+        PlayStageText("Stage " + stage + "\nStart!");
+    }
+    
+    void PrintClearText()
+    {
+        PlayStageText("Stage " + stage + "\nClear!");
+    }
+
+    public void StageEnd()
+    {
+        PrintClearText();
+        
+        fadeAnim.SetTrigger("Out");
+        
+        player.transform.position = playerPos.position;
+        
+        stage++;
+
+        if (stage > 2)
+        {
+            Invoke("GameOver",5f);
+        }
+        else
+        {
+            Invoke("StageStart",5f);
+        }
+        
+    }
+    
+    public void PlayStageText(string message)
+    {
+        if (m_StageText == null) return;
+        
+        m_StageText.text = message;
+        
+        m_StageText.style.opacity = 1f; 
+        m_StageText.style.scale = new StyleScale(new Vector2(1f, 1f));
+        
+        Invoke("HideStageText", 2f);
+    }
+
+    private void HideStageText()
+    {
+        // 투명도는 0으로 스르륵 흐려지게 둡니다.
+        m_StageText.style.opacity = 0f; 
+    
+        // 💡 핵심: 0.5배가 아니라 아예 0배(점)로 확 쪼그라들게 만듭니다!
+        m_StageText.style.scale = new StyleScale(new Vector2(0f, 0f));
+    }
+    
     void ReadSpawnFile()
     {
         spawnList.Clear();
         spawnIndex = 0;
         spawnEnd = false;
         
-        TextAsset textFile = Resources.Load("Stage 0") as TextAsset;
+        TextAsset textFile = Resources.Load("Stage " + stage) as TextAsset;
         StringReader stringReader = new StringReader(textFile.text);
 
         while (stringReader != null)
         {
             string line = stringReader.ReadLine();
-            Debug.Log(line);
+            // Debug.Log(line);
             if(line == null)
                 break;
             
@@ -106,6 +173,9 @@ public class GameManager : MonoBehaviour
             case "L" :
                 enemyIndex = 2;
                 break;
+            case "B" :
+                enemyIndex = 3;
+                break;
         }
         int enemyPoint = spawnList[spawnIndex].point;
         GameObject enemy = objectManager.MakeObj(enemyObjs[enemyIndex]);
@@ -114,6 +184,7 @@ public class GameManager : MonoBehaviour
         Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
         Enemy enemyLogic = enemy.GetComponent<Enemy>();
         enemyLogic.player = player;
+        enemyLogic.gameManager = this;
         enemyLogic.objectManager = objectManager;
 
         if (enemyPoint == 5 || enemyPoint == 6)
@@ -180,6 +251,15 @@ public class GameManager : MonoBehaviour
         playerLogic.isHit = false;
     }
 
+    public void CallExplosion(Vector3 pos, string type)
+    {
+        GameObject explosion = objectManager.MakeObj("explosion");
+        Explosion explosionLogic = explosion.GetComponent<Explosion>();
+        
+        explosion.transform.position = pos;
+        explosionLogic.StartExplosion(type);
+    }
+    
     public void GameOver()
     {
         m_GameOver.style.display = DisplayStyle.Flex;
